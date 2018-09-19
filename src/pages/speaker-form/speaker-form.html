@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Speaker</ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only (tap)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <form [formGroup]="form" *ngIf="form" (submit)="submit()">
+    <ion-list>
+
+      <ion-item>
+        <ion-label stacked>Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <button type="submit" ion-button block>Save</button>
+  </form>
+
+</ion-content>

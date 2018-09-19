@@ -16,4 +16,20 @@ export class SpeakersDataService {
   get(): Observable<Speaker[]> {
     return this.http.get<Speaker[]>(this.endpoint);
   }
+
+  remove(speaker: Speaker) {
+    const url = `${this.endpoint}/${speaker.id}`;
+
+    return this.http.delete(url);
+  }
+  
+  update(speaker: Speaker) {
+    const url = `${this.endpoint}/${speaker.id}`;
+
+    return this.http.put(url, speaker);
+  } 
+
+  create(speaker: Speaker) {
+    return this.http.post(this.endpoint, speaker);
+  } 
 }

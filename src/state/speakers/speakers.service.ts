@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { tap, map } from 'rxjs/operators';
+import { tap, switchMap } from 'rxjs/operators';
 
 import { SpeakersStore } from './speakers.store';
 import { SpeakersDataService } from './speakers-data.service';
@@ -19,7 +19,6 @@ export class SpeakersService {
     const request = this.speakersDataService.get()
       .pipe(
         tap((response: any) => {
-          const s = { conferences: response }
           this.speakersStore.setState((state) => {
             return {
               ...state,
@@ -29,5 +28,35 @@ export class SpeakersService {
         })
       );
     return request;  
+  }
+
+  remove(speaker: Speaker): Observable<Speaker[]> {
+    const request = this.speakersDataService.remove(speaker)
+      .pipe(
+        switchMap(() => {
+          return this.get()
+        })
+      );
+    return request;
+  }
+
+  update(speaker: Speaker): Observable<Speaker[]> {
+    const request = this.speakersDataService.update(speaker)
+      .pipe(
+        switchMap(() => {
+          return this.get()
+        })
+      );
+    return request;
+  }
+
+  create(speaker: Speaker): Observable<Speaker[]> {
+    const request = this.speakersDataService.create(speaker)
+      .pipe(
+        switchMap(() => {
+          return this.get()
+        })
+      );
+    return request;
   }
 }
