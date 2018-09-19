@@ -15,18 +15,16 @@ export class ConferencesService {
     private conferencesDataService: ConferencesDataService
   ) {}
 
-  get() {
+  get(): Observable<Conference[]> {
     const request = this.conferencesDataService.get()
       .pipe(
         tap((response: any) => {
-          console.log('hehehehe', response);
-          const s = { conferences: response }
-          this.conferencesStore.setState(state => {
-            console.log('state', state);
-            const newState = {...state, ...s}
-            console.log('newState', newState);
-            return newState;
-          })
+          this.conferencesStore.setState((state) => {
+            return {
+              ...state,
+              conferences: response
+            }
+          });
         })
       );
     return request;  

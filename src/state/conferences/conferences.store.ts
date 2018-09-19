@@ -15,7 +15,9 @@ export function createInitialState(): ConferencesState {
 @Injectable()
 @StoreConfig({ name: 'conferences' })
 export class ConferencesStore extends Store<Conference> {
+  
   constructor() {
     super(createInitialState());
   }
+
 }

@@ -13,6 +13,11 @@ import { ConferencesQuery } from './../state/conferences/conferences.query';
 import { ConferencesDataService } from './../state/conferences/conferences-data.service';
 import { ConferencesStore } from './../state/conferences/conferences.store';
 
+import { SpeakersService } from './../state/speakers/speakers.service';
+import { SpeakersQuery } from './../state/speakers/speakers.query';
+import { SpeakersDataService } from './../state/speakers/speakers-data.service';
+import { SpeakersStore } from './../state/speakers/speakers.store';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -34,6 +39,10 @@ import { ConferencesStore } from './../state/conferences/conferences.store';
     ConferencesQuery,
     ConferencesDataService,
     ConferencesStore,
+    SpeakersService,
+    SpeakersQuery,
+    SpeakersDataService,
+    SpeakersStore, 
   ]
 })
 export class AppModule {}

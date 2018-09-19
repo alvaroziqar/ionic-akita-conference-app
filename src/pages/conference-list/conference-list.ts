@@ -13,7 +13,7 @@ import { Conference } from '../../state/conferences/conference.model';
 })
 export class ConferenceListPage {
 
-  conferences$: any;
+  conferences$: Observable<Conference[]>;
 
   constructor(
     public navCtrl: NavController,
@@ -23,9 +23,14 @@ export class ConferenceListPage {
   ) {}
 
   ionViewWillLoad() {
-    this.conferencesService.get().subscribe();
-
     this.conferences$ = this.conferencesQuery.select((state: any) => state.conferences);
+
+    // Init Dataflow
+    this.conferencesService.get().subscribe();
+  }
+
+  goToDetail(conference: Conference) {
+    this.navCtrl.push('ConferenceDetailPage', {conference: conference});
   }
 
 }

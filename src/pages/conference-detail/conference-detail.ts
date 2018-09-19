@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 
-/**
- * Generated class for the ConferenceDetailPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { SpeakersQuery } from './../../state/speakers/speakers.query';
+import { SpeakersService } from './../../state/speakers/speakers.service';
+import { Speaker } from '../../state/speakers/speaker.model';
+import { Conference } from '../../state/conferences/conference.model';
 
 @IonicPage()
 @Component({
@@ -15,11 +14,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ConferenceDetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  conference: Conference;
+  speakers$: Observable<Speaker[]>;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ConferenceDetailPage');
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private speakersService: SpeakersService,
+    private speakersQuery: SpeakersQuery
+  ) {}
+
+  ionViewWillLoad() {
+    this.conference = this.navParams.get('conference');
+
+    this.speakers$ = this.speakersQuery.select((state: any) => state.speakers)
+      .map((speakers: Speaker[]) => {
+        return speakers.filter((speaker: Speaker) => speaker.conferenceId == this.conference.id)
+      });
+
+    // Init dataflow
+    this.speakersService.get().subscribe();
   }
 
 }
